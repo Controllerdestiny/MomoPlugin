@@ -56,7 +56,7 @@ jobs:
         id: external_changelog_second
         uses: mikepenz/release-changelog-builder-action@v5
         with:
-          configuration: "Config/Config_Rep.json"
+          configuration: "Config.json"
             #cache: ${{ steps.external_changelog_collect.outputs.cache }}
       - name: 生成更新日志
         env:
