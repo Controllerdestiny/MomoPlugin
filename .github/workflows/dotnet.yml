@@ -29,21 +29,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: 安装beautifulsoup4
-        run: |
-            sudo pip install beautifulsoup4
-            
-      - name: 安装Pandoc
-        run: |
-          sudo apt-get update
-          sudo apt-get install pandoc
-        env:
-          PYTHONIOENCODING: 'utf-8'
-        
-      - name: 安装TeX Live
-        run: |
-          sudo apt-get install -y texlive-xetex
-
+      
       - name: 打包
         run: 
           sudo python BuildHelper.py Release
