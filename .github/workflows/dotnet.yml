@@ -51,23 +51,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: 获取更新日志
-        id: external_changelog_second
-        uses: mikepenz/release-changelog-builder-action@v5
-        with:
-          configuration: "Config.json"
-            #cache: ${{ steps.external_changelog_collect.outputs.cache }}
-      - name: 生成更新日志
-        env:
-          CHANGELOG: ${{ steps.external_changelog_second.outputs.changelog }}
-          CHANGELOG_SECOND: ${{ steps.external_changelog_second.outputs.changelog }}
-        run: |
-          echo ${{ steps.external_changelog_collect.outputs.cache }}
-          echo "First:"
-          echo "$CHANGELOG"
-
-          echo "Second:"
-          echo "$CHANGELOG_SECOND"
+      
           
       - name: 更新发布标签
         run: |
