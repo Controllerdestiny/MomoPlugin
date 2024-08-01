@@ -16,3 +16,4 @@
 | [BindTSPlayer](BindTSplayer/README.md)   |   绑定TS角色      |     无           |
 | [Music](Music/README.md)		           |   点歌              |     无           |
 | [TerrariaCart](TerrariaCart/README.md)		   |   购物车      |     无           |
+| [PluginManager](PluginManager/README.md)		   |   插件管理      |     无           |
