@@ -1,7 +1,7 @@
 # [MorMor](https://github.com/Controllerdestiny/MorMor)机器人的插件仓库
 
 
-### 已收集插件
+### 已实现插件
 
 > 点击蓝链可查看插件详细说明
 
