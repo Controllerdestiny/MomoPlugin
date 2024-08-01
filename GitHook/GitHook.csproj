@@ -2,10 +2,6 @@
 	<Import Project="..\template.targets" />
 	<ItemGroup>
 	  <None Remove="Octokit.Webhooks.dll" />
-	  <None Remove="README.md" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Compile Include="README.md" />
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Include="Octokit.Webhooks.dll" />
