@@ -12,3 +12,7 @@
 |------------------------------------------|:------------------:|:------------------:|
 | [TerrariaMap](TerrariaMap/README.md)     |   点亮Terraria地图  |     无           |
 | [Bilibili](Bilibili/README.md)		   |   哔哩哔哩解析      |     无           |
+| [GitHook](GitHook/README.md)			   |   github WebHook      |     无           |
+| [BindTSPlayer](BindTSplayer/README.md)   |   绑定TS角色      |     无           |
+| [Music](Music/README.md)		           |   点歌              |     无           |
+| [TerrariaCart](TerrariaCart/README.md)		   |   购物车      |     无           |
