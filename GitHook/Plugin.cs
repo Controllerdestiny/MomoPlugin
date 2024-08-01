@@ -1,13 +1,13 @@
-﻿using Microsoft.Extensions.Primitives;
-using System.Net;
+﻿using System.Net;
+using System.Reflection;
 using System.Text;
+using Microsoft.Extensions.Primitives;
+using MorMor;
+using MorMor.Commands;
+using MorMor.Configuration;
+using MorMor.EventArgs;
 using MorMor.Plugin;
 using Octokit.Webhooks;
-using MorMor;
-using MorMor.Configuration;
-using System.Reflection;
-using MorMor.Commands;
-using System.Threading.Channels;
 
 namespace GitHook;
 
@@ -33,7 +33,6 @@ public class Plugin : MorMorPlugin
     public Plugin()
     {
         Config = ConfigHelpr.LoadConfig<Config>(SavePath);
-        
         WebhookEventProcessor = new WebHook();
     }
 
@@ -52,15 +51,15 @@ public class Plugin : MorMorPlugin
     public override void Initialize()
     {
         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-        HttpListener = new HttpListener();
-        CommandManager.Hook.Add(new("git", GitHubActionManager, "onebot.git.hook"));
         MorMor.Event.OperatHandler.OnReload += OperatHandler_OnReload;
+        CommandManager.Hook.Add(new("git", GitHubActionManager, "onebot.git.hook"));
+        HttpListener = new HttpListener();
         HttpListener.Prefixes.Add($"http://*:{Config.Port}{Config.Path}");
         HttpListener.Start();
         HttpListener.BeginGetContext(OnContext, null);
     }
 
-    private Task OperatHandler_OnReload(MorMor.EventArgs.ReloadEventArgs args)
+    private Task OperatHandler_OnReload(ReloadEventArgs args)
     {
         Config = ConfigHelpr.LoadConfig<Config>(SavePath);
         args.Message.Add("github webhook 重读成功!");
@@ -69,7 +68,7 @@ public class Plugin : MorMorPlugin
 
     private async void OnContext(IAsyncResult ar)
     {
-        if(_disposed) return;
+        if (_disposed) return;
         HttpListener.BeginGetContext(OnContext, null);
         var data = HttpListener.EndGetContext(ar);
         if (!Config.Enable)
@@ -161,6 +160,7 @@ public class Plugin : MorMorPlugin
         HttpListener.Stop();
         HttpListener.Close();
         AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
+        MorMor.Event.OperatHandler.OnReload -= OperatHandler_OnReload;
         CommandManager.Hook.commands.RemoveAll(x => x.CallBack == GitHubActionManager);
     }
 }

@@ -4,6 +4,7 @@ using MomoAPI.Entities;
 using MorMor;
 using MorMor.Configuration;
 using MorMor.Event;
+using MorMor.EventArgs;
 using MorMor.Plugin;
 using MorMor.TShock.Server;
 
@@ -26,9 +27,15 @@ public class TerrariaMap : MorMorPlugin
     public override void Initialize()
     {
         Config = ConfigHelpr.LoadConfig(SavePath, Config);
-        OperatHandler.OnReload += async (_) => Config =ConfigHelpr.LoadConfig(SavePath, Config);
+        OperatHandler.OnReload += ReloadCondig;
         MorMorAPI.Service.Event.OnGroupMessage += Event_OnGroupMessage;
     }
+
+    public async Task ReloadCondig(ReloadEventArgs args)
+    { 
+        Config = ConfigHelpr.LoadConfig(SavePath, Config);
+        await Task.CompletedTask;
+    } 
 
     private async Task Event_OnGroupMessage(MomoAPI.EventArgs.GroupMessageEventArgs args)
     {
@@ -81,6 +88,7 @@ public class TerrariaMap : MorMorPlugin
 
     protected override void Dispose(bool dispose)
     {
-        
+        OperatHandler.OnReload -= ReloadCondig;
+        MorMorAPI.Service.Event.OnGroupMessage -= Event_OnGroupMessage;
     }
 }

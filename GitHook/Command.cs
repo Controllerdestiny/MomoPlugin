@@ -1,6 +1,5 @@
 ﻿using MorMor.Attributes;
 using MorMor.Commands;
-using MorMor;
 using MorMor.Configuration;
 
 namespace GitHook;
@@ -62,7 +61,7 @@ public class Command
             else
             {
                 await args.EventArgs.Reply($"子命令错误!");
-            }   
+            }
         }
         else
         {

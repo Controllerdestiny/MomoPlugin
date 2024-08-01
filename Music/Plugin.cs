@@ -1,10 +1,10 @@
-﻿using MorMor.Plugin;
-using MorMor.Commands;
-using MomoAPI.Entities;
-using MorMor.Extensions;
-using MorMor;
+﻿using MomoAPI.Entities;
 using MomoAPI.Entities.Segment;
+using MorMor;
+using MorMor.Commands;
+using MorMor.Extensions;
 using MorMor.Permission;
+using MorMor.Plugin;
 
 namespace Music;
 

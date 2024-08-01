@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text;
-using System.Xml.Linq;
 using MomoAPI.Entities;
-using MorMor;
 using MorMor.Commands;
 using MorMor.Extensions;
 using MorMor.Plugin;
@@ -56,7 +54,7 @@ public class Plugin : MorMorPlugin
             sb.AppendLine("|:--:|:--:|:--:|:--:|:--:|");
             int index = 1;
             foreach (var plugin in MappingPlugin.Instances)
-            { 
+            {
                 sb.AppendLine($"|{index}|{plugin.Name}|{plugin.Author}|{plugin.Description}|{plugin.Version}");
                 index++;
             }

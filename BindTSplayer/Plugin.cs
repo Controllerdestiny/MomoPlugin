@@ -17,7 +17,7 @@ public class Plugin : MorMorPlugin
 
 
     private readonly Dictionary<long, List<Tuple<string, string>>> _temp = [];
-   
+
     public override void Initialize()
     {
         CommandManager.Hook.Add(new("绑定", BindPlayer, "onebot.tshock.bind"));

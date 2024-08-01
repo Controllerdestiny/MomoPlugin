@@ -1,13 +1,13 @@
-﻿using MomoAPI.Entities;
+﻿using System.Drawing;
 using System.Text;
+using MomoAPI.Entities;
 using MorMor;
 using MorMor.Commands;
-using MorMor.Plugin;
-using MorMor.Extensions;
-using MorMor.TShock.ChatCommand;
-using System.Drawing;
 using MorMor.Configuration;
+using MorMor.Extensions;
 using MorMor.Permission;
+using MorMor.Plugin;
+using MorMor.TShock.ChatCommand;
 
 namespace TerrariaCart;
 
@@ -103,7 +103,7 @@ public class Plugin : MorMorPlugin
             {
                 if (int.TryParse(args.Parameters[2], out int id))
                 {
-                   Config.Remove(args.EventArgs.SenderInfo.UserId, args.Parameters[1], id);
+                    Config.Remove(args.EventArgs.SenderInfo.UserId, args.Parameters[1], id);
                     await args.EventArgs.Reply("删除成功!", true);
                 }
                 else
@@ -113,7 +113,7 @@ public class Plugin : MorMorPlugin
             }
             else if (args.Parameters.Count == 2 && args.Parameters[0].ToLower() == "clear")
             {
-               Config.ClearCart(args.EventArgs.Sender.Id, args.Parameters[1]);
+                Config.ClearCart(args.EventArgs.Sender.Id, args.Parameters[1]);
                 await args.EventArgs.Reply("已清除购物车" + args.Parameters[1]);
             }
             else if (args.Parameters.Count == 1 && args.Parameters[0].ToLower() == "list")
