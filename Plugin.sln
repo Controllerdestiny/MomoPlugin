@@ -10,7 +10,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决�
 		template.targets = template.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bilibili", "Bilibili\Bilibili.csproj", "{2654B65E-7B11-4C5B-8121-CBB41537B12D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bilibili", "Bilibili\Bilibili.csproj", "{2654B65E-7B11-4C5B-8121-CBB41537B12D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitHook", "GitHook\GitHook.csproj", "{26A6B616-89D6-4DAF-ABF4-52E65CA70731}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BindTSplayer", "BindTSplayer\BindTSplayer.csproj", "{05FF2A55-4288-434E-BFB2-D273C18BD833}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Music", "Music\Music.csproj", "{0D7D987D-A6EC-492D-AAC6-F44D59B0FC66}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerrariaCart", "TerrariaCart\TerrariaCart.csproj", "{2ADF357A-09B4-4FAF-B8B5-6182583AF137}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +34,22 @@ Global
 		{2654B65E-7B11-4C5B-8121-CBB41537B12D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2654B65E-7B11-4C5B-8121-CBB41537B12D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2654B65E-7B11-4C5B-8121-CBB41537B12D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26A6B616-89D6-4DAF-ABF4-52E65CA70731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26A6B616-89D6-4DAF-ABF4-52E65CA70731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26A6B616-89D6-4DAF-ABF4-52E65CA70731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26A6B616-89D6-4DAF-ABF4-52E65CA70731}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05FF2A55-4288-434E-BFB2-D273C18BD833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05FF2A55-4288-434E-BFB2-D273C18BD833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05FF2A55-4288-434E-BFB2-D273C18BD833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05FF2A55-4288-434E-BFB2-D273C18BD833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D7D987D-A6EC-492D-AAC6-F44D59B0FC66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D7D987D-A6EC-492D-AAC6-F44D59B0FC66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D7D987D-A6EC-492D-AAC6-F44D59B0FC66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D7D987D-A6EC-492D-AAC6-F44D59B0FC66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ADF357A-09B4-4FAF-B8B5-6182583AF137}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ADF357A-09B4-4FAF-B8B5-6182583AF137}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ADF357A-09B4-4FAF-B8B5-6182583AF137}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ADF357A-09B4-4FAF-B8B5-6182583AF137}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

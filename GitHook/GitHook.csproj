@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\template.targets" />
+	<ItemGroup>
+	  <None Remove="Octokit.Webhooks.dll" />
+	  <None Remove="README.md" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Include="README.md" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="Octokit.Webhooks.dll" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="Octokit.Webhooks">
+	    <HintPath>Octokit.Webhooks.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+</Project>

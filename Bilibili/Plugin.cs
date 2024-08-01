@@ -1,8 +1,7 @@
-﻿using System.Linq;
+﻿
 using System.Text;
 using System.Text.RegularExpressions;
 using MomoAPI.Entities;
-using MomoAPI.Entities.Segment;
 using MorMor;
 using MorMor.Plugin;
 using Newtonsoft.Json;

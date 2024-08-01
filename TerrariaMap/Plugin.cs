@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using MomoAPI.Entities;
 using MorMor;
+using MorMor.Configuration;
 using MorMor.Event;
 using MorMor.Plugin;
 using MorMor.TShock.Server;
@@ -24,8 +25,8 @@ public class TerrariaMap : MorMorPlugin
 
     public override void Initialize()
     {
-        Config = MorMor.Configuration.Config.LoadConfig(SavePath, Config);
-        OperatHandler.OnReload += async (_) => Config = MorMor.Configuration.Config.LoadConfig(SavePath, Config);
+        Config = ConfigHelpr.LoadConfig(SavePath, Config);
+        OperatHandler.OnReload += async (_) => Config =ConfigHelpr.LoadConfig(SavePath, Config);
         MorMorAPI.Service.Event.OnGroupMessage += Event_OnGroupMessage;
     }
 
