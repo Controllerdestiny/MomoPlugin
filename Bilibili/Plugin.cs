@@ -16,9 +16,9 @@ namespace Bilibili
 
         public override string Description => "提供Bilibili相关功能";
 
-        public override string Author => "少司命";
+        public override string Author => "不知名作者 少司命更改";
 
-        public override Version Version => new(1, 0, 0, 2);
+        public override Version Version => new(1, 0, 0, 0);
 
         private HttpClient _httpClient;
         public BilibiliPlugin()
@@ -31,8 +31,6 @@ namespace Bilibili
             var message = new MessageBody();
             try
             {
-                
-
                 //var url = $"https://api.bilibili.com/x/web-interface/view?aid={aid}";
                 var response = await _httpClient.GetAsync(parseUrl);
                 response.EnsureSuccessStatusCode();

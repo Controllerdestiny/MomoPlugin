@@ -10,6 +10,14 @@ namespace TerrariaMap;
 
 public class TerrariaMap : MorMorPlugin
 {
+    public override string Name => "TerrariaMap";
+
+    public override string Description => "生成TerrariaMap的插件";
+
+    public override string Author => "少司命";
+
+    public override Version Version => new(1, 0, 0, 0);
+
     public Config Config { get; set; } = new();
 
     public string SavePath = Path.Combine(MorMorAPI.SAVE_PATH, "TerrariaMap.json");
