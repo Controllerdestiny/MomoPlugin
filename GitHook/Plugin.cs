@@ -7,7 +7,7 @@ using MorMor;
 using MorMor.Configuration;
 using System.Reflection;
 using MorMor.Commands;
-using MorMor.Permission;
+using System.Threading.Channels;
 
 namespace GitHook;
 
@@ -25,13 +25,15 @@ public class Plugin : MorMorPlugin
 
     private readonly WebhookEventProcessor WebhookEventProcessor;
 
-    private readonly HttpListener HttpListener;
+    private HttpListener HttpListener = null!;
 
     internal static Config Config = new();
+
+    private bool _disposed = false;
     public Plugin()
     {
         Config = ConfigHelpr.LoadConfig<Config>(SavePath);
-        HttpListener = new HttpListener();
+        
         WebhookEventProcessor = new WebHook();
     }
 
@@ -50,6 +52,7 @@ public class Plugin : MorMorPlugin
     public override void Initialize()
     {
         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+        HttpListener = new HttpListener();
         CommandManager.Hook.Add(new("git", GitHubActionManager, "onebot.git.hook"));
         MorMor.Event.OperatHandler.OnReload += OperatHandler_OnReload;
         HttpListener.Prefixes.Add($"http://*:{Config.Port}{Config.Path}");
@@ -66,6 +69,7 @@ public class Plugin : MorMorPlugin
 
     private async void OnContext(IAsyncResult ar)
     {
+        if(_disposed) return;
         HttpListener.BeginGetContext(OnContext, null);
         var data = HttpListener.EndGetContext(ar);
         if (!Config.Enable)
@@ -153,7 +157,10 @@ public class Plugin : MorMorPlugin
 
     protected override void Dispose(bool dispose)
     {
-        if (dispose)
-            HttpListener.Close();
+        _disposed = true;
+        HttpListener.Stop();
+        HttpListener.Close();
+        AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
+        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == GitHubActionManager);
     }
 }

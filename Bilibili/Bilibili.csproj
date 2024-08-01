@@ -1,3 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\template.targets" />
+	<ItemGroup>
+	  <PackageReference Update="MorMor" Version="2.0.4" />
+	</ItemGroup>
 </Project>

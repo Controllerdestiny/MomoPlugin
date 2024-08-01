@@ -19,11 +19,7 @@ namespace Bilibili
 
         public override Version Version => new(1, 0, 0, 0);
 
-        private HttpClient _httpClient;
-        public BilibiliPlugin()
-        {
-            _httpClient = new();
-        }
+        private HttpClient _httpClient = null!;
 
         private async Task<MessageBody> ParseVideo(string parseUrl, string id)
         {
@@ -197,7 +193,7 @@ namespace Bilibili
         protected override void Dispose(bool dispose)
         {
             _httpClient.Dispose();
-            base.Dispose();
+            MorMorAPI.Service.Event.OnGroupMessage -= Event_OnGroupMessage;
         }
 
         [GeneratedRegex(".*(?<BVID>BV[0-9A-Za-z]+).*")]

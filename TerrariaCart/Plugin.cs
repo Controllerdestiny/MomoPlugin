@@ -167,6 +167,7 @@ public class Plugin : MorMorPlugin
 
     protected override void Dispose(bool dispose)
     {
-        throw new NotImplementedException();
+        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == CartManager);
+        ChatCommandMananger.Hook.commands.RemoveAll(x => x.CallBack == CartBuy);
     }
 }
