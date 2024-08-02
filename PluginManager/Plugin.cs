@@ -24,6 +24,12 @@ public class Plugin : MorMorPlugin
         CommandManager.Hook.Add(new("重载插件", HotReloadPlugin, "onebot.plugin.admin"));
     }
 
+    protected override void Dispose(bool dispose)
+    {
+        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == PManager);
+        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == HotReloadPlugin);
+    }
+
     private async Task HotReloadPlugin(CommandArgs args)
     {
         Stopwatch sw = new();
@@ -92,11 +98,5 @@ public class Plugin : MorMorPlugin
                 $"${args.CommamdPrefix}{args.Name} off [序号]" +
                 $"${args.CommamdPrefix}{args.Name} on [序号]");
         }
-    }
-
-    protected override void Dispose(bool dispose)
-    {
-        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == PManager);
-        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == HotReloadPlugin);
     }
 }

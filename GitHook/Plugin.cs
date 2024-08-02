@@ -62,7 +62,7 @@ public class Plugin : MorMorPlugin
     private Task OperatHandler_OnReload(ReloadEventArgs args)
     {
         Config = ConfigHelpr.LoadConfig<Config>(SavePath);
-        args.Message.Add("github webhook 重读成功!");
+        args.Message.Add("\ngithub webhook 重读成功!");
         return Task.CompletedTask;
     }
 
@@ -101,13 +101,13 @@ public class Plugin : MorMorPlugin
             switch (type)
             {
                 case "release":
-                    return Octokit.Webhooks.WebhookEventType.Release;
+                    return WebhookEventType.Release;
                 case "pr":
-                    return Octokit.Webhooks.WebhookEventType.PullRequest;
+                    return WebhookEventType.PullRequest;
                 case "push":
-                    return Octokit.Webhooks.WebhookEventType.Push;
+                    return WebhookEventType.Push;
                 case "star":
-                    return Octokit.Webhooks.WebhookEventType.Star;
+                    return WebhookEventType.Star;
                 default:
                     return null;
             }

@@ -20,7 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Music", "Music\Music.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerrariaCart", "TerrariaCart\TerrariaCart.csproj", "{2ADF357A-09B4-4FAF-B8B5-6182583AF137}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginManager", "PluginManager\PluginManager.csproj", "{1F367EAC-F955-4CC8-8A83-2D2F8AE8114B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginManager", "PluginManager\PluginManager.csproj", "{1F367EAC-F955-4CC8-8A83-2D2F8AE8114B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineReward", "OnlineReward\OnlineReward.csproj", "{02EF3F30-B9E7-4707-8D5A-FAFC57977A44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{1F367EAC-F955-4CC8-8A83-2D2F8AE8114B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F367EAC-F955-4CC8-8A83-2D2F8AE8114B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F367EAC-F955-4CC8-8A83-2D2F8AE8114B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02EF3F30-B9E7-4707-8D5A-FAFC57977A44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02EF3F30-B9E7-4707-8D5A-FAFC57977A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02EF3F30-B9E7-4707-8D5A-FAFC57977A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02EF3F30-B9E7-4707-8D5A-FAFC57977A44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
