@@ -17,3 +17,4 @@
 | [Music](Music/README.md)		           |   点歌              |     无           |
 | [TerrariaCart](TerrariaCart/README.md)		   |   购物车      |     无           |
 | [PluginManager](PluginManager/README.md)		   |   插件管理      |     无           |
+| [OnlineReward](OnlineReward/README.md)		   |   在线时长奖励      |     无           |
