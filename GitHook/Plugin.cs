@@ -161,6 +161,6 @@ public class Plugin : MorMorPlugin
         HttpListener.Close();
         AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
         MorMor.Event.OperatHandler.OnReload -= OperatHandler_OnReload;
-        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == GitHubActionManager);
+        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == GitHubActionManager);
     }
 }

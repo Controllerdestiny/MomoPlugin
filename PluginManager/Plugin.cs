@@ -21,28 +21,23 @@ public class Plugin : MorMorPlugin
     public override void Initialize()
     {
         CommandManager.Hook.Add(new("pm", PManager, "onebot.plugin.admin"));
-        CommandManager.Hook.Add(new("重载插件", HotReloadPlugin, "onebot.plugin.admin"));
     }
 
     protected override void Dispose(bool dispose)
     {
-        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == PManager);
-        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == HotReloadPlugin);
+        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == PManager);
     }
 
     private async Task HotReloadPlugin(CommandArgs args)
     {
         Stopwatch sw = new();
         sw.Start();
-        foreach (var plugin in MappingPlugin.Instances)
-            plugin.Dispose();
-        CommandManager.Hook.commands.Clear();
-        ChatCommandMananger.Hook.commands.Clear();
-        MappingPlugin.Instances.Clear();
-        MappingPlugin.Assemblies.Clear();
-        MappingPlugin.Initializer();
+        CommandManager.Hook.CommandDelegate.Clear();
+        ChatCommandMananger.Hook.CommandDelegate.Clear();
+        PluginLoader.UnLoad();
+        PluginLoader.Load();
         sw.Stop();
-        await args.EventArgs.Reply($"插件热重载成功!\n用时:{sw.Elapsed.TotalSeconds:F5} 秒!", true);
+        await args.EventArgs.Reply($"插件热重载成功{AppDomain.CurrentDomain.GetAssemblies().Count()}!\n用时:{sw.Elapsed.TotalSeconds:F5} 秒!", true);
     }
 
     private async Task PManager(CommandArgs args)
@@ -59,7 +54,7 @@ public class Plugin : MorMorPlugin
             sb.AppendLine("|序号|插件名称|插件作者|插件说明|插件版本|");
             sb.AppendLine("|:--:|:--:|:--:|:--:|:--:|");
             int index = 1;
-            foreach (var plugin in MappingPlugin.Instances)
+            foreach (var plugin in PluginLoader.PluginContext.Plugins)
             {
                 sb.AppendLine($"|{index}|{plugin.Name}|{plugin.Author}|{plugin.Description}|{plugin.Version}");
                 index++;
@@ -71,25 +66,29 @@ public class Plugin : MorMorPlugin
         }
         else if (args.Parameters.Count == 2 && args.Parameters[0].ToLower() == "off")
         {
-            if (!int.TryParse(args.Parameters[1], out var index) || index < 1 || index > MappingPlugin.Instances.Count)
+            if (!int.TryParse(args.Parameters[1], out var index) || index < 1 || index > PluginLoader.PluginContext.Plugins.Count)
             {
                 await args.EventArgs.Reply("请输入一个正确的序号!", true);
                 return;
             }
-            var instance = MappingPlugin.Instances[index - 1];
+            var instance = PluginLoader.PluginContext.Plugins[index - 1];
             instance.Dispose();
             await args.EventArgs.Reply($"{instance.Name} 插件卸载成功!", true);
         }
         else if (args.Parameters.Count == 2 && args.Parameters[0].ToLower() == "on")
         {
-            if (!int.TryParse(args.Parameters[1], out var index) || index < 1 || index > MappingPlugin.Instances.Count)
+            if (!int.TryParse(args.Parameters[1], out var index) || index < 1 || index > PluginLoader.PluginContext.Plugins.Count)
             {
                 await args.EventArgs.Reply("请输入一个正确的序号!", true);
                 return;
             }
-            var instance = MappingPlugin.Instances[index - 1];
+            var instance = PluginLoader.PluginContext.Plugins[index - 1];
             instance.Initialize();
             await args.EventArgs.Reply($"{instance.Name} 插件加载成功!", true);
+        }
+        else if (args.Parameters.Count == 1 && args.Parameters[0].ToLower() == "reload")
+        {
+            await HotReloadPlugin(args);
         }
         else
         {

@@ -96,7 +96,7 @@ public class Plugin : MorMorPlugin
 
     protected override void Dispose(bool dispose)
     {
-        CommandManager.Hook.commands.RemoveAll(x => x.CallBack ==  CReward);
+        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack ==  CReward);
         OperatHandler.OnCommand -= OperatHandler_OnCommand;
         OperatHandler.OnReload -= OperatHandler_OnReload;
     }

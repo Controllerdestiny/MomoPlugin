@@ -25,8 +25,8 @@ public class Plugin : MorMorPlugin
 
     protected override void Dispose(bool dispose)
     {
-        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == Music);
-        CommandManager.Hook.commands.RemoveAll(x => x.CallBack == ChageMusic);
+        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == Music);
+        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == ChageMusic);
     }
 
     #region 点歌

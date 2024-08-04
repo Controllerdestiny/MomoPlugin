@@ -2,9 +2,11 @@
 using System.Runtime.InteropServices;
 using MomoAPI.Entities;
 using MorMor;
+using MorMor.Commands;
 using MorMor.Configuration;
 using MorMor.Event;
 using MorMor.EventArgs;
+using MorMor.Permission;
 using MorMor.Plugin;
 using MorMor.TShock.Server;
 
@@ -27,8 +29,31 @@ public class TerrariaMap : MorMorPlugin
     public override void Initialize()
     {
         Config = ConfigHelpr.LoadConfig(SavePath, Config);
+        CommandManager.Hook.Add(new("获取地图", LoadWorld, OneBotPermissions.GenerateMap));
         OperatHandler.OnReload += ReloadCondig;
         MorMorAPI.Service.Event.OnGroupMessage += Event_OnGroupMessage;
+    }
+
+    private async Task LoadWorld(CommandArgs args)
+    {
+        if (MorMorAPI.UserLocation.TryGetServer(args.EventArgs.Sender.Id, args.EventArgs.Group.Id, out var server) && server != null)
+        {
+            var file = await server.GetWorldFile();
+            if (file.Status)
+            {
+                var base64 = Convert.ToBase64String(file.WorldBuffer);
+                await args.EventArgs.Reply(new MessageBody().File("base64://" + base64, file.WorldName + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".wld"));
+            }
+            else
+            {
+                await args.EventArgs.Reply("无法连接到服务器!");
+            }
+        }
+        else
+        {
+
+            await args.EventArgs.Reply("请切换至一个有效的服务器!");
+        }
     }
 
     public async Task ReloadCondig(ReloadEventArgs args)
@@ -90,5 +115,6 @@ public class TerrariaMap : MorMorPlugin
     {
         OperatHandler.OnReload -= ReloadCondig;
         MorMorAPI.Service.Event.OnGroupMessage -= Event_OnGroupMessage;
+        CommandManager.Hook.CommandDelegate.RemoveAll(x=>x.CallBack == LoadWorld);
     }
 }
