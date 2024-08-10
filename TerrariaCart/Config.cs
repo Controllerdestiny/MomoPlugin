@@ -1,5 +1,6 @@
 ﻿
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using MorMor;
 using MorMor.Model.Terraria;
 
@@ -7,6 +8,8 @@ namespace TerrariaCart;
 
 public class Config
 {
+    [JsonIgnore]
+    public string PATH = Path.Combine(MorMorAPI.SAVE_PATH, "Cart.json");
     public Dictionary<long, Dictionary<string, List<int>>> Carts { get; set; } = new();
 
     public void Add(long uin, string cartName, int id)
@@ -109,5 +112,21 @@ public class Config
         }
         return shopping;
 
+    }
+
+    public Config LoadConfig()
+    {
+        if (File.Exists(PATH))
+            return JsonSerializer.Deserialize<Config>(File.ReadAllText(PATH)) ?? new();
+        return new();
+    }
+
+    public void Save()
+    {
+        File.WriteAllText(PATH, JsonSerializer.Serialize(this, new JsonSerializerOptions()
+        {
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            WriteIndented = true
+        }));
     }
 }

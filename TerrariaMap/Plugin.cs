@@ -28,7 +28,7 @@ public class TerrariaMap : MorMorPlugin
 
     public override void Initialize()
     {
-        Config = ConfigHelpr.LoadConfig(SavePath, Config);
+        Config = Config.LoadConfig();
         CommandManager.Hook.Add(new("获取地图", LoadWorld, OneBotPermissions.GenerateMap));
         OperatHandler.OnReload += ReloadCondig;
         MorMorAPI.Service.Event.OnGroupMessage += Event_OnGroupMessage;

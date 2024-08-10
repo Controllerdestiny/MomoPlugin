@@ -23,11 +23,9 @@ public class Plugin : MorMorPlugin
 
     public Config Config { get; set; } = new();
 
-    public static readonly string SavePath = Path.Combine(MorMorAPI.SAVE_PATH, "Cart.json");
-
     public Plugin()
     {
-        Config = ConfigHelpr.LoadConfig(SavePath, Config);
+        Config = Config.LoadConfig();
     }
 
     public override void Initialize()
@@ -162,7 +160,7 @@ public class Plugin : MorMorPlugin
         {
             await args.EventArgs.Reply(e.Message);
         }
-        ConfigHelpr.Write(SavePath, Config);
+        Config.Save();
     }
 
     protected override void Dispose(bool dispose)

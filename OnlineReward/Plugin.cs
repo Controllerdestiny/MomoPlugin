@@ -17,12 +17,10 @@ public class Plugin : MorMorPlugin
 
     public override Version Version => new(1, 0, 0, 0);
 
-    public readonly string SavePath = Path.Combine(MorMorAPI.SAVE_PATH, "OnlineReward.json");
-
     public Config Config = new();
     public override void Initialize()
     {
-        Config = ConfigHelpr.LoadConfig<Config>(SavePath);
+        Config = Config.LoadConfig();
         CommandManager.Hook.Add(new("领取在线奖励", CReward, MorMor.Permission.OneBotPermissions.OnlineRank));
         OperatHandler.OnCommand += OperatHandler_OnCommand;
         OperatHandler.OnReload += OperatHandler_OnReload;
@@ -30,7 +28,7 @@ public class Plugin : MorMorPlugin
 
     private async Task OperatHandler_OnReload(MorMor.EventArgs.ReloadEventArgs args)
     {
-        Config = ConfigHelpr.LoadConfig(SavePath, Config);
+        Config = Config.LoadConfig();
         args.Message.Add("\n在线时长奖励配置重读成功!");
         await Task.CompletedTask;
     }
@@ -40,7 +38,7 @@ public class Plugin : MorMorPlugin
         if (args.Name == "泰拉服务器重置")
         {
             Config.Reward.Clear();
-            ConfigHelpr.Write(SavePath, Config);
+            Config = Config.LoadConfig();
         }   
         await Task.CompletedTask;
     }
@@ -85,7 +83,7 @@ public class Plugin : MorMorPlugin
                 }
             }
             await args.EventArgs.Reply(sb.ToString().Trim());
-            ConfigHelpr.Write(SavePath, Config);
+            Config.Save();
         }
         else
         {

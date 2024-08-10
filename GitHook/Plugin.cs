@@ -34,6 +34,18 @@ public class Plugin : MorMorPlugin
     {
         Config = ConfigHelpr.LoadConfig<Config>(SavePath);
         WebhookEventProcessor = new WebHook();
+        PluginLoader.PluginContext.Resolving += PluginContext_Resolving;
+    }
+
+    private Assembly? PluginContext_Resolving(System.Runtime.Loader.AssemblyLoadContext arg1, AssemblyName arg2)
+    {
+        string resourceName = $"{Assembly.GetExecutingAssembly().GetName().Name}.{arg2.Name}.dll";
+        using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+        {
+            if (stream == null)
+                throw new NullReferenceException("无法加载程序集:" + arg2.Name);
+            return arg1.LoadFromStream(stream);
+        }
     }
 
     private Assembly? CurrentDomain_AssemblyResolve(object? sender, ResolveEventArgs args)

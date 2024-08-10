@@ -6,13 +6,13 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <OutputPath>..\out\$(MSBuildProjectName)</OutputPath>
+        <!--<OutputPath>..\out\$(ProjectDir)</OutputPath>-->
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
     </PropertyGroup>
 
     <ItemGroup>
-		<PackageReference Include="MorMor" Version="2.0.9">
+		<PackageReference Include="MorMor" Version="2.0.8">
             <ExcludeAssets>contentFiles</ExcludeAssets>
         </PackageReference>
     </ItemGroup>
@@ -28,4 +28,8 @@
             </AssemblyAttribute>
         </ItemGroup>
     </Target>
+    
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="xcopy /y "$(ProjectDir)*.dll" "$(SolutionDir)out\$(ProjectName)\\"/>
+	</Target>
 </Project>
