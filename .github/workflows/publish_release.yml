@@ -29,7 +29,8 @@ jobs:
 
       - name: 生成压缩包
         run: |
-           cd out find . -type d -exec zip -r "../Plugins.zip" {} \;
+          cd out
+          find . -type d -exec zip -r "../out.zip" {} \;
       
       - name: 上传临时插件包
         uses: actions/upload-artifact@v4
