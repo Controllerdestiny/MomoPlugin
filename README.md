@@ -1,5 +1,8 @@
 # [MorMor](https://github.com/Controllerdestiny/MorMor)机器人的插件仓库
 
+## 食用方法
+> [!NOTE]
+> 直接将压缩包中文需要用到插件的件夹拖入MorMor机器人Plugins文件夹中即可
 
 ### 已实现插件
 
