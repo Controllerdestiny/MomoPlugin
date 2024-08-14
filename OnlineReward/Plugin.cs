@@ -26,14 +26,14 @@ public class Plugin : MorMorPlugin
         OperatHandler.OnReload += OperatHandler_OnReload;
     }
 
-    private async Task OperatHandler_OnReload(MorMor.EventArgs.ReloadEventArgs args)
+    private async ValueTask OperatHandler_OnReload(MorMor.EventArgs.ReloadEventArgs args)
     {
         Config = Config.LoadConfig();
         args.Message.Add("\n在线时长奖励配置重读成功!");
         await Task.CompletedTask;
     }
 
-    private async Task OperatHandler_OnCommand(CommandArgs args)
+    private async ValueTask OperatHandler_OnCommand(CommandArgs args)
     {
         if (args.Name == "泰拉服务器重置")
         {
@@ -43,7 +43,7 @@ public class Plugin : MorMorPlugin
         await Task.CompletedTask;
     }
 
-    private async Task CReward(CommandArgs args)
+    private async ValueTask CReward(CommandArgs args)
     {
         if (MorMorAPI.UserLocation.TryGetServer(args.EventArgs.Sender.Id, args.EventArgs.Group.Id, out var server) && server != null)
         {

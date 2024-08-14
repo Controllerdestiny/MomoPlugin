@@ -34,7 +34,7 @@ public class Plugin : MorMorPlugin
         ChatCommandMananger.Hook.Add(new("结算", CartBuy, OneBotPermissions.TerrariaShop));
     }
 
-    public async Task CartBuy(PlayerCommandArgs args)
+    public async ValueTask CartBuy(PlayerCommandArgs args)
     {
         if (args.Server == null) return;
         if (args.Parameters.Count != 1)
@@ -81,7 +81,7 @@ public class Plugin : MorMorPlugin
         }
     }
 
-    private async Task CartManager(CommandArgs args)
+    private async ValueTask CartManager(CommandArgs args)
     {
         try
         {

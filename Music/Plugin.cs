@@ -1,6 +1,6 @@
-﻿using MomoAPI.Entities;
+﻿global using MomoAPI.IO;
+using MomoAPI.Entities;
 using MomoAPI.Entities.Segment;
-using MorMor;
 using MorMor.Commands;
 using MorMor.Extensions;
 using MorMor.Permission;
@@ -30,7 +30,7 @@ public class Plugin : MorMorPlugin
     }
 
     #region 点歌
-    private async Task Music(CommandArgs args)
+    private async ValueTask Music(CommandArgs args)
     {
         if (args.Parameters.Count > 0)
         {
@@ -45,7 +45,7 @@ public class Plugin : MorMorPlugin
                     }
                     catch (Exception ex)
                     {
-                        MorMorAPI.Log.ConsoleError($"点歌错误:{ex.Message}");
+                        Log.ConsoleError($"点歌错误:{ex.Message}");
                     }
                     MusicTool.ChangeName(musicName[2..], args.EventArgs.Sender.Id);
                     MusicTool.ChangeLocal("网易", args.EventArgs.Sender.Id);
@@ -100,7 +100,7 @@ public class Plugin : MorMorPlugin
     #endregion
 
     #region 选歌
-    private async Task ChageMusic(CommandArgs args)
+    private async ValueTask ChageMusic(CommandArgs args)
     {
         if (args.Parameters.Count > 0)
         {

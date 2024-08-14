@@ -123,9 +123,9 @@ namespace Bilibili
             MorMorAPI.Service.Event.OnGroupMessage += Event_OnGroupMessage;
         }
 
-        private async Task Event_OnGroupMessage(MomoAPI.EventArgs.GroupMessageEventArgs args)
+        private async ValueTask Event_OnGroupMessage(MomoAPI.EventArgs.GroupMessageEventArgs args)
         {
-            var text = args.MessageContext.RawText;
+            var text = args.MessageContext.GetText();
             if (args.MessageContext.Messages.FirstOrDefault(x => x.Type == MomoAPI.Enumeration.SegmentType.Json)?.MessageData is MomoAPI.Entities.Segment.DataModel.Json json)
             {
                 var data = JsonConvert.DeserializeObject<JObject>(json.Connect);

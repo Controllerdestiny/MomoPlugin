@@ -71,11 +71,11 @@ public class Plugin : MorMorPlugin
         HttpListener.BeginGetContext(OnContext, null);
     }
 
-    private Task OperatHandler_OnReload(ReloadEventArgs args)
+    private ValueTask OperatHandler_OnReload(ReloadEventArgs args)
     {
         Config = ConfigHelpr.LoadConfig<Config>(SavePath);
         args.Message.Add("\ngithub webhook 重读成功!");
-        return Task.CompletedTask;
+        return ValueTask.CompletedTask;
     }
 
     private async void OnContext(IAsyncResult ar)
@@ -103,7 +103,7 @@ public class Plugin : MorMorPlugin
         data.Response.Close();
     }
 
-    public async Task GitHubActionManager(CommandArgs args)
+    public async ValueTask GitHubActionManager(CommandArgs args)
     {
         string? MatchAction()
         {

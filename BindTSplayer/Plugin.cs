@@ -23,7 +23,7 @@ public class Plugin : MorMorPlugin
         CommandManager.Hook.Add(new("绑定", BindPlayer, "onebot.tshock.bind"));
     }
 
-    private async Task BindPlayer(CommandArgs args)
+    private async ValueTask BindPlayer(CommandArgs args)
     {
         if (!MorMorAPI.UserLocation.TryGetServer(args.EventArgs.Sender.Id, args.EventArgs.Group.Id, out var server) || server == null)
         {

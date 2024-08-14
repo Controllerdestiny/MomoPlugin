@@ -34,7 +34,7 @@ public class TerrariaMap : MorMorPlugin
         MorMorAPI.Service.Event.OnGroupMessage += Event_OnGroupMessage;
     }
 
-    private async Task LoadWorld(CommandArgs args)
+    private async ValueTask LoadWorld(CommandArgs args)
     {
         if (MorMorAPI.UserLocation.TryGetServer(args.EventArgs.Sender.Id, args.EventArgs.Group.Id, out var server) && server != null)
         {
@@ -56,13 +56,13 @@ public class TerrariaMap : MorMorPlugin
         }
     }
 
-    public async Task ReloadCondig(ReloadEventArgs args)
+    public async ValueTask ReloadCondig(ReloadEventArgs args)
     { 
         Config = ConfigHelpr.LoadConfig(SavePath, Config);
         await Task.CompletedTask;
     } 
 
-    private async Task Event_OnGroupMessage(MomoAPI.EventArgs.GroupMessageEventArgs args)
+    private async ValueTask Event_OnGroupMessage(MomoAPI.EventArgs.GroupMessageEventArgs args)
     {
         if (args.MessageContext.Messages.Any(x => x.Type == MomoAPI.Enumeration.SegmentType.File))
         {

@@ -28,7 +28,7 @@ public class Plugin : MorMorPlugin
         CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == PManager);
     }
 
-    private async Task HotReloadPlugin(CommandArgs args)
+    private async ValueTask HotReloadPlugin(CommandArgs args)
     {
         Stopwatch sw = new();
         sw.Start();
@@ -40,7 +40,7 @@ public class Plugin : MorMorPlugin
         await args.EventArgs.Reply($"插件热重载成功{AppDomain.CurrentDomain.GetAssemblies().Count()}!\n用时:{sw.Elapsed.TotalSeconds:F5} 秒!", true);
     }
 
-    private async Task PManager(CommandArgs args)
+    private async ValueTask PManager(CommandArgs args)
     {
         if (args.Parameters.Count == 1 && args.Parameters[0].ToLower() == "list")
         {
