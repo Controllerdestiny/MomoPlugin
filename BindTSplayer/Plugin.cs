@@ -20,7 +20,7 @@ public class Plugin : MorMorPlugin
 
     public override void Initialize()
     {
-        CommandManager.Hook.Add(new("绑定", BindPlayer, "onebot.tshock.bind"));
+        CommandManager.Hook.AddGroupCommand(new("绑定", BindPlayer, "onebot.tshock.bind"));
     }
 
     private async ValueTask BindPlayer(CommandArgs args)
@@ -100,6 +100,6 @@ public class Plugin : MorMorPlugin
 
     protected override void Dispose(bool dispose)
     {
-        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == BindPlayer);
+        CommandManager.Hook.GroupCommandDelegate.RemoveAll(x => x.CallBack == BindPlayer);
     }
 }

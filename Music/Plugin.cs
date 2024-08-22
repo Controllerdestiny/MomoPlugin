@@ -19,14 +19,14 @@ public class Plugin : MorMorPlugin
     public override Version Version => new(1, 0, 0, 0);
     public override void Initialize()
     {
-        CommandManager.Hook.Add(new("点歌", Music, OneBotPermissions.Music));
-        CommandManager.Hook.Add(new("选", ChageMusic, OneBotPermissions.Music));
+        CommandManager.Hook.AddGroupCommand(new("点歌", Music, OneBotPermissions.Music));
+        CommandManager.Hook.AddGroupCommand(new("选", ChageMusic, OneBotPermissions.Music));
     }
 
     protected override void Dispose(bool dispose)
     {
-        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == Music);
-        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == ChageMusic);
+        CommandManager.Hook.GroupCommandDelegate.RemoveAll(x => x.CallBack == Music);
+        CommandManager.Hook.GroupCommandDelegate.RemoveAll(x => x.CallBack == ChageMusic);
     }
 
     #region 点歌

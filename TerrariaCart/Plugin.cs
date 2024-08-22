@@ -3,11 +3,9 @@ using System.Text;
 using MomoAPI.Entities;
 using MorMor;
 using MorMor.Commands;
-using MorMor.Configuration;
 using MorMor.Extensions;
 using MorMor.Permission;
 using MorMor.Plugin;
-using MorMor.TShock.ChatCommand;
 
 namespace TerrariaCart;
 
@@ -30,21 +28,21 @@ public class Plugin : MorMorPlugin
 
     public override void Initialize()
     {
-        CommandManager.Hook.Add(new("cart", CartManager, OneBotPermissions.TerrariaShop));
-        ChatCommandMananger.Hook.Add(new("结算", CartBuy, OneBotPermissions.TerrariaShop));
+        CommandManager.Hook.AddGroupCommand(new("cart", CartManager, OneBotPermissions.TerrariaShop));
+        CommandManager.Hook.AddServerCommand(new("结算", CartBuy, OneBotPermissions.TerrariaShop));
     }
 
-    public async ValueTask CartBuy(PlayerCommandArgs args)
+    public async ValueTask CartBuy(ServerCommandArgs args)
     {
         if (args.Server == null) return;
         if (args.Parameters.Count != 1)
         {
-            await args.Server.PrivateMsg(args.Name, $"语法错误:\n正确语法:/结算 [购物车]", Color.GreenYellow);
+            await args.Server.PrivateMsg(args.UserName, $"语法错误:\n正确语法:/结算 [购物车]", Color.GreenYellow);
             return;
         }
         if (!args.Server.EnabledShop)
         {
-            await args.Server.PrivateMsg(args.Name, "服务器未开启商店系统！", Color.DarkRed);
+            await args.Server.PrivateMsg(args.UserName, "服务器未开启商店系统！", Color.DarkRed);
             return;
         }
         if (args.User != null)
@@ -54,7 +52,7 @@ public class Plugin : MorMorPlugin
                 var carts = Config.GetCartShop(args.Account.UserId, args.Parameters[0]);
                 if (carts.Count == 0)
                 {
-                    await args.Server.PrivateMsg(args.Name, "购物车中不存在物品!", Color.DarkRed);
+                    await args.Server.PrivateMsg(args.UserName, "购物车中不存在物品!", Color.DarkRed);
                     return;
                 }
                 var all = carts.Sum(x => x.Price);
@@ -65,16 +63,16 @@ public class Plugin : MorMorPlugin
                     {
                         var res = await args.Server.Command($"/g {shop.ID} {args.Name} {shop.num}");
                     }
-                    await args.Server.PrivateMsg(args.Name, "结算成功!", Color.GreenYellow);
+                    await args.Server.PrivateMsg(args.UserName, "结算成功!", Color.GreenYellow);
                 }
                 else
                 {
-                    await args.Server.PrivateMsg(args.Name, "星币不足!", Color.GreenYellow);
+                    await args.Server.PrivateMsg(args.UserName, "星币不足!", Color.GreenYellow);
                 }
             }
             catch (Exception e)
             {
-                await args.Server.PrivateMsg(args.Name, e.Message, Color.DarkRed);
+                await args.Server.PrivateMsg(args.UserName, e.Message, Color.DarkRed);
                 return;
             }
 
@@ -165,7 +163,7 @@ public class Plugin : MorMorPlugin
 
     protected override void Dispose(bool dispose)
     {
-        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == CartManager);
-        ChatCommandMananger.Hook.CommandDelegate.RemoveAll(x => x.CallBack == CartBuy);
+        CommandManager.Hook.GroupCommandDelegate.RemoveAll(x => x.CallBack == CartManager);
+        CommandManager.Hook.ServerCommandDelegate.RemoveAll(x => x.CallBack == CartBuy);
     }
 }

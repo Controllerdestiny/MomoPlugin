@@ -4,7 +4,6 @@ using MomoAPI.Entities;
 using MorMor.Commands;
 using MorMor.Extensions;
 using MorMor.Plugin;
-using MorMor.TShock.ChatCommand;
 
 namespace PluginManager;
 
@@ -20,20 +19,20 @@ public class Plugin : MorMorPlugin
 
     public override void Initialize()
     {
-        CommandManager.Hook.Add(new("pm", PManager, "onebot.plugin.admin"));
+        CommandManager.Hook.AddGroupCommand(new("pm", PManager, "onebot.plugin.admin"));
     }
 
     protected override void Dispose(bool dispose)
     {
-        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == PManager);
+        CommandManager.Hook.GroupCommandDelegate.RemoveAll(x => x.CallBack == PManager);
     }
 
     private async ValueTask HotReloadPlugin(CommandArgs args)
     {
         Stopwatch sw = new();
         sw.Start();
-        CommandManager.Hook.CommandDelegate.Clear();
-        ChatCommandMananger.Hook.CommandDelegate.Clear();
+        CommandManager.Hook.GroupCommandDelegate.Clear();
+        CommandManager.Hook.ServerCommandDelegate.Clear();
         PluginLoader.UnLoad();
         PluginLoader.Load();
         sw.Stop();

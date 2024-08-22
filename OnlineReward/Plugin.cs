@@ -21,7 +21,7 @@ public class Plugin : MorMorPlugin
     public override void Initialize()
     {
         Config = Config.LoadConfig();
-        CommandManager.Hook.Add(new("领取在线奖励", CReward, MorMor.Permission.OneBotPermissions.OnlineRank));
+        CommandManager.Hook.AddGroupCommand(new("领取在线奖励", CReward, MorMor.Permission.OneBotPermissions.OnlineRank));
         OperatHandler.OnCommand += OperatHandler_OnCommand;
         OperatHandler.OnReload += OperatHandler_OnReload;
     }
@@ -94,7 +94,7 @@ public class Plugin : MorMorPlugin
 
     protected override void Dispose(bool dispose)
     {
-        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack ==  CReward);
+        CommandManager.Hook.GroupCommandDelegate.RemoveAll(x => x.CallBack ==  CReward);
         OperatHandler.OnCommand -= OperatHandler_OnCommand;
         OperatHandler.OnReload -= OperatHandler_OnReload;
     }

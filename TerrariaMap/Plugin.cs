@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using MomoAPI.Entities;
+using MomoAPI.EventArgs;
 using MorMor;
 using MorMor.Commands;
 using MorMor.Configuration;
@@ -29,9 +30,35 @@ public class TerrariaMap : MorMorPlugin
     public override void Initialize()
     {
         Config = Config.LoadConfig();
-        CommandManager.Hook.Add(new("获取地图", LoadWorld, OneBotPermissions.GenerateMap));
+        CommandManager.Hook.AddGroupCommand(new("获取地图", LoadWorld, OneBotPermissions.GenerateMap));
         OperatHandler.OnReload += ReloadCondig;
-        MorMorAPI.Service.Event.OnGroupMessage += Event_OnGroupMessage;
+        MorMorAPI.Service.Event.OnGroupUpLoadFile += OnUpFile;
+    }
+
+    private async ValueTask OnUpFile(GroupUpLoadFileEventArgs args)
+    {
+        try
+        {
+            if (args.UpLoad.Size > 1024 * 1024 * 30)
+                return;
+            var (status, fileinfo) = await args.OneBotAPI.GetFile(args.UpLoad.ID);
+                if (string.IsNullOrEmpty(fileinfo.Base64))
+                    return;
+                var buffer = Convert.FromBase64String(fileinfo.Base64);
+
+                if (TerrariaServer.IsReWorld(buffer))
+                {
+                    await args.OneBotAPI.SendGroupMessage(args.GroupId, "检测到Terraria地图，正在生成.map文件....");
+                    var uuid = Guid.NewGuid().ToString();
+                    Spawn(uuid);
+                    var (name, data) = IPCO.Start(uuid, buffer);
+                    await args.OneBotAPI.SendGroupMessage(args.GroupId,MessageBody.Builder().File("base64://" + Convert.ToBase64String(data), name));
+                }
+        }
+        catch (Exception e)
+        {
+            await args.OneBotAPI.SendGroupMessage(args.GroupId, "[GetFile] Error" + e.Message);
+        }
     }
 
     private async ValueTask LoadWorld(CommandArgs args)
@@ -62,37 +89,6 @@ public class TerrariaMap : MorMorPlugin
         await Task.CompletedTask;
     } 
 
-    private async ValueTask Event_OnGroupMessage(MomoAPI.EventArgs.GroupMessageEventArgs args)
-    {
-        if (args.MessageContext.Messages.Any(x => x.Type == MomoAPI.Enumeration.SegmentType.File))
-        {
-            try
-            {
-                var fileid = args.MessageContext.GetFileId();
-                if (fileid != null)
-                {
-                    var (status, fileinfo) = await args.OneBotAPI.GetFile(fileid);
-                    if (string.IsNullOrEmpty(fileinfo.Base64) || fileinfo.FileSize > 1024 * 1024 * 30)
-                        return;
-                    var buffer = Convert.FromBase64String(fileinfo.Base64);
-
-                    if (TerrariaServer.IsReWorld(buffer))
-                    {
-                        await args.Reply("检测到Terraria地图，正在生成.map文件....");
-                        var uuid = Guid.NewGuid().ToString();
-                        Spawn(uuid);
-                        var (name, data) = IPCO.Start(uuid, buffer);
-                        await args.Reply(new MessageBody().File("base64://" + Convert.ToBase64String(data), name));
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                await args.Reply("[GetFile] Error" + e.Message);
-            }
-
-        }
-    }
 
     private void Spawn(string uuid)
     {
@@ -114,7 +110,7 @@ public class TerrariaMap : MorMorPlugin
     protected override void Dispose(bool dispose)
     {
         OperatHandler.OnReload -= ReloadCondig;
-        MorMorAPI.Service.Event.OnGroupMessage -= Event_OnGroupMessage;
-        CommandManager.Hook.CommandDelegate.RemoveAll(x=>x.CallBack == LoadWorld);
+        MorMorAPI.Service.Event.OnGroupUpLoadFile -= OnUpFile;
+        CommandManager.Hook.GroupCommandDelegate.RemoveAll(x=>x.CallBack == LoadWorld);
     }
 }

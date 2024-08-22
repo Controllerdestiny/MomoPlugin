@@ -64,7 +64,7 @@ public class Plugin : MorMorPlugin
     {
         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         MorMor.Event.OperatHandler.OnReload += OperatHandler_OnReload;
-        CommandManager.Hook.Add(new("git", GitHubActionManager, "onebot.git.hook"));
+        CommandManager.Hook.AddGroupCommand(new("git", GitHubActionManager, "onebot.git.hook"));
         HttpListener = new HttpListener();
         HttpListener.Prefixes.Add($"http://*:{Config.Port}{Config.Path}");
         HttpListener.Start();
@@ -173,6 +173,6 @@ public class Plugin : MorMorPlugin
         HttpListener.Close();
         AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
         MorMor.Event.OperatHandler.OnReload -= OperatHandler_OnReload;
-        CommandManager.Hook.CommandDelegate.RemoveAll(x => x.CallBack == GitHubActionManager);
+        CommandManager.Hook.GroupCommandDelegate.RemoveAll(x => x.CallBack == GitHubActionManager);
     }
 }
