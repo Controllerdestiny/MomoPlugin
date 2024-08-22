@@ -192,8 +192,12 @@ namespace Bilibili
 
         protected override void Dispose(bool dispose)
         {
-            _httpClient.Dispose();
-            MorMorAPI.Service.Event.OnGroupMessage -= Event_OnGroupMessage;
+            if (dispose)
+            {
+                _httpClient.Dispose();
+                MorMorAPI.Service.Event.OnGroupMessage -= Event_OnGroupMessage;
+            }
+            base.Dispose();
         }
 
         [GeneratedRegex(".*(?<BVID>BV[0-9A-Za-z]+).*")]

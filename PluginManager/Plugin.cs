@@ -27,7 +27,7 @@ public class Plugin : MorMorPlugin
         CommandManager.Hook.GroupCommandDelegate.RemoveAll(x => x.CallBack == PManager);
     }
 
-    private async ValueTask HotReloadPlugin(CommandArgs args)
+    private static async ValueTask HotReloadPlugin(CommandArgs args)
     {
         Stopwatch sw = new();
         sw.Start();
@@ -36,12 +36,12 @@ public class Plugin : MorMorPlugin
         PluginLoader.UnLoad();
         PluginLoader.Load();
         sw.Stop();
-        await args.EventArgs.Reply($"插件热重载成功{AppDomain.CurrentDomain.GetAssemblies().Count()}!\n用时:{sw.Elapsed.TotalSeconds:F5} 秒!", true);
+        await args.EventArgs.Reply($"插件热重载成功{AppDomain.CurrentDomain.GetAssemblies().Length}!\n用时:{sw.Elapsed.TotalSeconds:F5} 秒!", true);
     }
 
     private async ValueTask PManager(CommandArgs args)
     {
-        if (args.Parameters.Count == 1 && args.Parameters[0].ToLower() == "list")
+        if (args.Parameters.Count == 1 && args.Parameters[0].Equals("list", StringComparison.CurrentCultureIgnoreCase))
         {
             var sb = new StringBuilder();
             sb.AppendLine($$"""<div align="center">""");
