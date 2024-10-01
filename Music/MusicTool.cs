@@ -11,7 +11,7 @@ public class MusicTool
 
     public static async Task<List<QQ.MusicItem>> GetMusicQQList(string musicName)
     {
-        return await QQ.MusicQQ.GetMusicList(musicName);
+        return await QQ.MusicQQ.GetMusicList(musicName, Plugin.Config.Key);
     }
 
     public static async Task<string> QQMusic(string musicName)
@@ -37,7 +37,7 @@ public class MusicTool
         sb.AppendLine("# QQ音乐");
         for (int i = 0; i < list.Count; i++)
         {
-            sb.AppendLine($"## `{i + 1}`- {list[i].Song} -- {list[i].Singer}");
+            sb.AppendLine($"## `{i + 1}`- {list[i].Song} -- {string.Join(",", list[i].Singer)}");
         }
         sb.AppendLine();
         sb.AppendLine($$"""</div>""");
@@ -82,7 +82,7 @@ public class MusicTool
 
     public static async Task<QQ.MusicData?> GetMusicQQ(string musicName, int index)
     {
-        return await QQ.MusicQQ.GetMusic(musicName, index);
+        return await QQ.MusicQQ.GetMusic(musicName, index, Plugin.Config.Key);
     }
 
     public static async Task<_163.MusicData?> GetMusic163(string musicName, int index)

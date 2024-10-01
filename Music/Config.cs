@@ -1,21 +1,17 @@
 ﻿
-
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using MorMor;
 
-namespace OnlineReward;
+namespace Music;
 
 public class Config
 {
     [JsonIgnore]
-    public readonly string PATH = Path.Combine(MorMorAPI.SAVE_PATH, "OnlineReward.json");
+    public string PATH = Path.Combine(MorMorAPI.SAVE_PATH, "Music.Json");
 
-    [JsonPropertyName("领取比例")]
-    public int TimeRate { get; set; } = 100;
-
-    [JsonPropertyName("领取记录")]
-    public Dictionary<string, int> Reward { get; set; } = [];
+    [JsonPropertyName("访问Key")]
+    public string Key { get; set; } = string.Empty;
 
     public Config LoadConfig()
     {

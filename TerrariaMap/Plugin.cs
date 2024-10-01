@@ -42,18 +42,18 @@ public class TerrariaMap : MorMorPlugin
             if (args.UpLoad.Size > 1024 * 1024 * 30)
                 return;
             var (status, fileinfo) = await args.OneBotAPI.GetFile(args.UpLoad.ID);
-                if (string.IsNullOrEmpty(fileinfo.Base64))
-                    return;
-                var buffer = Convert.FromBase64String(fileinfo.Base64);
+            if (string.IsNullOrEmpty(fileinfo.Base64))
+                return;
+            var buffer = Convert.FromBase64String(fileinfo.Base64);
 
-                if (TerrariaServer.IsReWorld(buffer))
-                {
-                    await args.OneBotAPI.SendGroupMessage(args.GroupId, "检测到Terraria地图，正在生成.map文件....");
-                    var uuid = Guid.NewGuid().ToString();
-                    Spawn(uuid);
-                    var (name, data) = IPCO.Start(uuid, buffer);
-                    await args.OneBotAPI.SendGroupMessage(args.GroupId,MessageBody.Builder().File("base64://" + Convert.ToBase64String(data), name));
-                }
+            if (TerrariaServer.IsReWorld(buffer))
+            {
+                await args.OneBotAPI.SendGroupMessage(args.GroupId, "检测到Terraria地图，正在生成.map文件....");
+                var uuid = Guid.NewGuid().ToString();
+                Spawn(uuid);
+                var (name, data) = IPCO.Start(uuid, buffer);
+                await args.OneBotAPI.SendGroupMessage(args.GroupId,MessageBody.Builder().File("base64://" + Convert.ToBase64String(data), name));
+            }
         }
         catch (Exception e)
         {

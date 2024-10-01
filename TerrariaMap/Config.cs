@@ -18,6 +18,7 @@ public class Config
     {
         if (File.Exists(PATH))
             return JsonSerializer.Deserialize<Config>(File.ReadAllText(PATH)) ?? new();
+        Save();
         return new();
     }
 

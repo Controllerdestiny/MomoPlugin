@@ -2,6 +2,7 @@
 using MomoAPI.Entities;
 using MomoAPI.Entities.Segment;
 using MorMor.Commands;
+using MorMor.EventArgs;
 using MorMor.Extensions;
 using MorMor.Permission;
 using MorMor.Plugin;
@@ -17,16 +18,28 @@ public class Plugin : MorMorPlugin
     public override string Author => "少司命";
 
     public override Version Version => new(1, 0, 0, 0);
+
+    public static Config Config { get; set; } = new();
+
     public override void Initialize()
     {
+        Config = Config.LoadConfig();   
+        MorMor.Event.OperatHandler.OnReload += ReloadCondig;
         CommandManager.Hook.AddGroupCommand(new("点歌", Music, OneBotPermissions.Music));
         CommandManager.Hook.AddGroupCommand(new("选", ChageMusic, OneBotPermissions.Music));
     }
 
     protected override void Dispose(bool dispose)
     {
+        MorMor.Event.OperatHandler.OnReload -= ReloadCondig;
         CommandManager.Hook.GroupCommandDelegate.RemoveAll(x => x.CallBack == Music);
         CommandManager.Hook.GroupCommandDelegate.RemoveAll(x => x.CallBack == ChageMusic);
+    }
+
+    public static async ValueTask ReloadCondig(ReloadEventArgs? args = null)
+    {
+        Config = Config.LoadConfig();
+        await Task.CompletedTask;
     }
 
     #region 点歌
@@ -117,7 +130,7 @@ public class Plugin : MorMorPlugin
                             await args.EventArgs.Reply(
                             [
 
-                                MomoSegment.Music_QQ(music.Link,music.Url,music.Cover,music.Song,music.Singer)
+                                MomoSegment.Music_QQ(music.Url,music.Music,music.Picture,music.Song,music.Singer)
                             ]);
                         }
                         catch (Exception ex)
